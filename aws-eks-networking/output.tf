@@ -4,12 +4,12 @@ output "vpc_id" {
 }
 
 output "public_subnet_ids" {
-  value = module.vpc.public_subnets[*].id
+  value = module.vpc.public_subnets
   description = "List of IDs of the public subnets"
 }
 
 output "private_subnet_ids" {
-  value = module.vpc.private_subnets[*].id
+  value = module.vpc.private_subnets
   description = "List of IDs of the private subnets"
 }
 
