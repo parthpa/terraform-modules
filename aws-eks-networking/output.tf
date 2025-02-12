@@ -24,7 +24,7 @@ output "public_route_table_id" {
 }
 
 output "nat_gateway_ids" {
-  value = module.vpc.nat_gateway_ids
+  value = module.vpc.nat_ids
   description = "List of NAT Gateway IDs"
 }
 
