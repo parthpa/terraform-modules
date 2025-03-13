@@ -352,10 +352,6 @@ variable "network_type" {
   default     = null
 }
 
-################################################################################
-# CloudWatch Log Group
-################################################################################
-
 variable "create_cloudwatch_log_group" {
   description = "Determines whether a CloudWatch log group is created for each `enabled_cloudwatch_logs_exports`"
   type        = bool
@@ -372,4 +368,46 @@ variable "cloudwatch_log_group_kms_key_id" {
   description = "The ARN of the KMS Key to use when encrypting log data"
   type        = string
   default     = null
+}
+
+variable "create_param_group" {
+  description = "Whether to create this resource or not?"
+  type        = bool
+  default     = true
+}
+
+variable "param_group_name" {
+  description = "The name of the DB parameter group"
+  type        = string
+  default     = ""
+}
+
+variable "param_group_name_prefix" {
+  description = "Determines whether to use `name` as is or create a unique name beginning with `name` as the specified prefix"
+  type        = bool
+  default     = true
+}
+
+variable "param_group_description" {
+  description = "The description of the DB parameter group"
+  type        = string
+  default     = null
+}
+
+variable "family" {
+  description = "The family of the DB parameter group"
+  type        = string
+  default     = null
+}
+
+variable "parameters" {
+  description = "A list of DB parameter maps to apply"
+  type        = list(map(string))
+  default     = []
+}
+
+variable "tags" {
+  description = "A mapping of tags to assign to the resource"
+  type        = map(string)
+  default     = {}
 }
