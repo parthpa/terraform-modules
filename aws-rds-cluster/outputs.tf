@@ -55,11 +55,28 @@ output "db_instance_password" {
   sensitive   = true
 }
 
-################################################################################
-# CloudWatch Log Group
-################################################################################
-
 output "db_instance_cloudwatch_log_groups" {
   description = "Map of CloudWatch log groups created and their attributes"
   value       = aws_cloudwatch_log_group.this
+}
+
+output "cluster_parameter_group_id" {
+  description = "The db parameter group id"
+  value       = try(aws_rds_cluster_parameter_group.this[0].id, "")
+}
+
+output "cluster_parameter_group_arn" {
+  description = "The ARN of the db parameter group"
+  value       = try(aws_rds_cluster_parameter_group.this[0].arn, "")
+}
+
+
+output "db_parameter_group_id" {
+  description = "The db parameter group id"
+  value       = try(aws_db_parameter_group.this[0].id, "")
+}
+
+output "db_parameter_group_arn" {
+  description = "The ARN of the db parameter group"
+  value       = try(aws_db_parameter_group.this[0].arn, "")
 }

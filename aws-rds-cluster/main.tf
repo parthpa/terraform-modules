@@ -1,10 +1,3 @@
-locals {
-  final_snapshot_identifier = var.skip_final_snapshot ? null : "${var.final_snapshot_identifier_prefix}-${var.cluster_identifier}-${try(random_id.snapshot_identifier[0].hex, "")}"
-
-  cluster_identifier        = var.use_identifier_prefix ? null : var.cluster_identifier
-  cluster_identifier_prefix = var.use_identifier_prefix ? "${var.cluster_identifier}-" : null
-}
-
 data "aws_partition" "current" {}
 
 resource "random_id" "snapshot_identifier" {
@@ -41,8 +34,6 @@ resource "aws_rds_cluster" "rds_cluster" {
   db_subnet_group_name   = var.db_subnet_group_name
   db_cluster_parameter_group_name   = var.db_cluster_parameter_group_name
   
-  #Option group is not supported in PostgreSQL
-  #option_group_name      = var.option_group_name
   network_type           = var.network_type
 
   iops                = var.iops
@@ -70,10 +61,6 @@ resource "aws_rds_cluster" "rds_cluster" {
 
 }
 
-################################################################################
-# CloudWatch Log Group
-################################################################################
-
 resource "aws_cloudwatch_log_group" "this" {
   for_each = toset([for log in var.enabled_cloudwatch_logs_exports : log if var.create && var.create_cloudwatch_log_group])
 
@@ -83,10 +70,6 @@ resource "aws_cloudwatch_log_group" "this" {
 
   tags = var.tags
 }
-
-################################################################################
-# Enhanced monitoring
-################################################################################
 
 data "aws_iam_policy_document" "enhanced_monitoring" {
   statement {
@@ -100,10 +83,6 @@ data "aws_iam_policy_document" "enhanced_monitoring" {
     }
   }
 }
-
-###################
-# AWS Backup Plan 
-###################
 
 resource "aws_backup_plan" "multiaz" {
   name = "${var.cluster_identifier}_backup_plan"
@@ -146,4 +125,44 @@ resource "aws_backup_selection" "backup_selection" {
    resources = [
     aws_rds_cluster.rds_cluster[0].arn
   ]
+}
+
+resource "aws_rds_cluster_parameter_group" "this" {
+  count = var.create_param_group ? 1 : 0
+
+  name        = local.param_group_name
+  name_prefix = local.param_group_name_prefix
+  description = local.param_group_description
+  family      = var.family
+
+  tags = merge(
+    var.tags,
+    {
+      "Name" = local.param_group_name
+    },
+  )
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_db_parameter_group" "this" {
+  count = var.create_param_group ? 1 : 0
+
+  name        = local.param_group_name
+  name_prefix = local.param_group_name_prefix
+  description = local.param_group_description
+  family      = var.family
+
+  tags = merge(
+    var.tags,
+    {
+      "Name" = var.param_group_name
+    },
+  )
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
