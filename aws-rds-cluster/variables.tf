@@ -405,9 +405,3 @@ variable "parameters" {
   type        = list(map(string))
   default     = []
 }
-
-variable "tags" {
-  description = "A mapping of tags to assign to the resource"
-  type        = map(string)
-  default     = {}
-}
