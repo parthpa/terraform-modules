@@ -32,7 +32,7 @@ resource "aws_rds_cluster" "rds_cluster" {
 
   vpc_security_group_ids = var.vpc_security_group_ids
   db_subnet_group_name   = var.db_subnet_group_name
-  db_cluster_parameter_group_name   = var.db_cluster_parameter_group_name
+  db_cluster_parameter_group_name   = try(aws_db_parameter_group.this[0].id, null)
   
   network_type           = var.network_type
 

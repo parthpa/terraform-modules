@@ -25,7 +25,7 @@ resource "aws_db_subnet_group" "this" {
   name        = local.db_subnet_group_name
   name_prefix = local.db_subnet_group_name_prefix
   description = local.db_subnet_group_description
-  subnet_ids  = var.subnet_ids
+  subnet_ids  = aws_subnet.this[*].id
 
   tags = merge(
     var.tags,
