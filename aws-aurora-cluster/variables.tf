@@ -3,7 +3,7 @@ variable "environment" {
   type        = string
 }
 
-variable "cluster_identifier_prefix" {
+variable "cluster_id" {
   description = "Prefix for the cluster identifier"
   type        = string
 }
