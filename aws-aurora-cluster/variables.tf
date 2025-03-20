@@ -41,4 +41,5 @@ variable "db_instance_class" {
 variable "tags" {
   description = "tags to apply to rds aurora cluster"
   type        = map(string)
+  default     = {}
 }
