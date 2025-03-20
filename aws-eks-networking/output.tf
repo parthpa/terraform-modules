@@ -28,10 +28,10 @@ output "nat_gateway_ids" {
   description = "List of NAT Gateway IDs"
 }
 
-output "eks_subnets" {
+output "application_subnets" {
   value = slice(module.vpc.private_subnets, 0, length(module.vpc.private_subnets) / 2)
 }
 
-output "rds_subnets" {
+output "database_subnets" {
   value = slice(module.vpc.private_subnets, length(module.vpc.private_subnets) / 2, length(module.vpc.private_subnets))
 }

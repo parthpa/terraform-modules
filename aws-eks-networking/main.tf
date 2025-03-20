@@ -13,6 +13,7 @@ module "vpc" {
 
   enable_dns_support   = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
+  enable_nat_gateway   = true
 
   tags                = local.tags
   public_subnet_tags  = local.public_subnet_tags
