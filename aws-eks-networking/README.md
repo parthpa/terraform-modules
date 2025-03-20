@@ -43,12 +43,12 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_eks_subnets"></a> [eks\_subnets](#output\_eks\_subnets) | n/a |
+| <a name="output_application_subnets"></a> [application\_subnets](#output\_application\_subnets) | n/a |
+| <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | n/a |
 | <a name="output_nat_gateway_ids"></a> [nat\_gateway\_ids](#output\_nat\_gateway\_ids) | List of NAT Gateway IDs |
 | <a name="output_private_route_table_id"></a> [private\_route\_table\_id](#output\_private\_route\_table\_id) | ID of the private route table |
 | <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | List of IDs of the private subnets |
 | <a name="output_public_route_table_id"></a> [public\_route\_table\_id](#output\_public\_route\_table\_id) | ID of the public route table |
 | <a name="output_public_subnet_ids"></a> [public\_subnet\_ids](#output\_public\_subnet\_ids) | List of IDs of the public subnets |
-| <a name="output_rds_subnets"></a> [rds\_subnets](#output\_rds\_subnets) | n/a |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | ID of the VPC |
 <!-- END_TF_DOCS -->
