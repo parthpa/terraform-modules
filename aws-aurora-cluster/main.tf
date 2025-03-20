@@ -1,7 +1,7 @@
 resource "aws_db_subnet_group" "this" {
   name       = "${var.environment}-${var.cluster_id}"
   subnet_ids = var.private_subnets
-  tags       = var.tags
+  # tags       = var.tags
 }
 
 resource "aws_rds_cluster" "this" {
