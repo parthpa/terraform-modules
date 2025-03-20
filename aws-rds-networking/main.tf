@@ -1,3 +1,7 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
   enable_dns_support = true
@@ -13,6 +17,7 @@ resource "aws_subnet" "this" {
 
   vpc_id     = aws_vpc.this.id
   cidr_block = var.subnet_cidr[count.index]
+  availability_zone = var.azs[count.index % length(var.azs)]
 
   tags = {
     Name = "${var.vpc_name}-subnet-${count.index}"
