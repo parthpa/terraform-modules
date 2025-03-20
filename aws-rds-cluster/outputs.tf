@@ -62,7 +62,7 @@ output "db_instance_cloudwatch_log_groups" {
 
 output "cluster_parameter_group_id" {
   description = "The db parameter group id"
-  value       = try(aws_rds_cluster_parameter_group.this[0].id, "")
+  value       = try(aws_db_parameter_group.this[0].id, "")
 }
 
 output "cluster_parameter_group_arn" {
