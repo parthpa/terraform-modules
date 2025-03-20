@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "this" {
-  name       = "${var.environment}-${var.cluster_identifier_prefix}-subnet-group"
+  name       = "${var.environment}-${var.cluster_identifier_prefix}"
   subnet_ids = var.private_subnets
   tags       = var.tags
 }
