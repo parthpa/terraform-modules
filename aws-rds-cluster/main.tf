@@ -46,9 +46,6 @@ resource "aws_rds_cluster" "rds_cluster" {
   copy_tags_to_snapshot     = var.copy_tags_to_snapshot
   skip_final_snapshot       = var.skip_final_snapshot
   final_snapshot_identifier = local.final_snapshot_identifier
-
-  backup_retention_period = var.backup_retention_period
-  preferred_backup_window           = var.preferred_backup_window
   
   enabled_cloudwatch_logs_exports = var.enabled_cloudwatch_logs_exports
 
@@ -81,69 +78,6 @@ data "aws_iam_policy_document" "enhanced_monitoring" {
       type        = "Service"
       identifiers = ["monitoring.rds.amazonaws.com"]
     }
-  }
-}
-
-resource "aws_backup_plan" "multiaz" {
-  name = "${var.cluster_identifier}_backup_plan"
-
-  rule {
-    rule_name         = "${var.cluster_identifier}_tf_multiaz_backup_rule"
-    target_vault_name = "Default"
-    schedule          = "cron(0 12 * * ? *)"
-  }
-}
-
-resource "aws_iam_role" "backup_role" {
-  name               = "${var.cluster_identifier}_backup_role"
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": ["sts:AssumeRole"],
-      "Effect": "allow",
-      "Principal": {
-        "Service": ["backup.amazonaws.com"]
-      }
-    }
-  ]
-}
-POLICY
-}
-
-resource "aws_iam_role_policy_attachment" "backup_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup"
-  role       = aws_iam_role.backup_role.name
-}
-
-resource "aws_backup_selection" "backup_selection" {
-  iam_role_arn = aws_iam_role.backup_role.arn
-  name         = "${var.cluster_identifier}_backup_selection"
-  plan_id      = aws_backup_plan.multiaz.id
-
-   resources = [
-    aws_rds_cluster.rds_cluster[0].arn
-  ]
-}
-
-resource "aws_rds_cluster_parameter_group" "this" {
-  count = var.create_param_group ? 1 : 0
-
-  name        = local.param_group_name
-  name_prefix = local.param_group_name_prefix
-  description = local.param_group_description
-  family      = var.family
-
-  tags = merge(
-    var.tags,
-    {
-      "Name" = local.param_group_name
-    },
-  )
-
-  lifecycle {
-    create_before_destroy = true
   }
 }
 

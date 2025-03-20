@@ -54,3 +54,7 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "azs" {
+  type    = list(string)
+}
