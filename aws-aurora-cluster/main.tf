@@ -1,13 +1,11 @@
 resource "aws_db_subnet_group" "aurora" {
-  name       = "${var.db_name}-subnet-group"
+  name       = "${var.environment}-${var.cluster_identifier_prefix}-subnet-group"
   subnet_ids = var.private_subnets
-  tags = {
-    Name = "${var.db_name}-subnet-group"
-  }
+  tags       = var.tags
 }
 
 resource "aws_rds_cluster" "aurora" {
-  cluster_identifier      = "${var.db_name}-cluster"
+  cluster_identifier      = "${var.environment}-${var.cluster_identifier_prefix}-cluster"
   engine                  = "aurora-postgresql"
   engine_mode             = "provisioned"
   master_username         = var.db_username
@@ -16,14 +14,15 @@ resource "aws_rds_cluster" "aurora" {
   db_subnet_group_name    = aws_db_subnet_group.aurora.name
   skip_final_snapshot     = true
 
-  backup_retention_period = 7
+  tags                    = var.tags
 }
 
 resource "aws_rds_cluster_instance" "aurora_instances" {
   count              = 2
-  identifier         = "${var.db_name}-instance-${count.index}"
+  identifier         = "${var.environment}-${var.cluster_identifier_prefix}-instance-${count.index}"
   cluster_identifier = aws_rds_cluster.aurora.id
   instance_class     = var.db_instance_class
   engine             = aws_rds_cluster.aurora.engine
   publicly_accessible = false
+  tags                = var.tags
 }

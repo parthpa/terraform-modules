@@ -1,3 +1,12 @@
+variable "environment" {
+  description = "Environment name (e.g., dev, prod)"
+  type        = string
+}
+
+variable "cluster_identifier_prefix" {
+  description = "Prefix for the cluster identifier"
+  type        = string
+}
 variable "vpc_id" {
   description = "VPC ID"
   type        = string
@@ -27,4 +36,9 @@ variable "db_name" {
 variable "db_instance_class" {
   description = "Instance class for Aurora instances"
   type        = string
+}
+
+variable "tags" {
+  description = "tags to apply to rds aurora cluster"
+  type        = map(string)
 }
