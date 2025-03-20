@@ -67,7 +67,7 @@ output "cluster_parameter_group_id" {
 
 output "cluster_parameter_group_arn" {
   description = "The ARN of the db parameter group"
-  value       = try(aws_rds_cluster_parameter_group.this[0].arn, "")
+  value       = try(aws_db_parameter_group.this[0].arn, "")
 }
 
 
