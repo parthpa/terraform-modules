@@ -21,6 +21,7 @@ variable "engine_version" {
   description = "Aurora engine version"
   type        = string
 }
+
 variable "db_username" {
   description = "Database master username"
   type        = string
