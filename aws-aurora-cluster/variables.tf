@@ -54,3 +54,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "snapshot_identifier" {
+  description = "Snapshot identifier to restore from"
+  type        = string
+  default     = ""
+}

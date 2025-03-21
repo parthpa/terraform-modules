@@ -9,12 +9,12 @@ resource "aws_rds_cluster" "this" {
   engine                  = "aurora-postgresql"
   engine_mode             = "provisioned"
   engine_version          = var.engine_version
-  master_username         = var.db_username
-  master_password         = var.db_password
+
   database_name           = var.db_name
   db_subnet_group_name    = aws_db_subnet_group.this.name
   skip_final_snapshot     = true
 
+  snapshot_identifier     = var.snapshot_identifier
   tags                    = var.tags
 }
 
