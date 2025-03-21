@@ -43,6 +43,12 @@ variable "db_instance_class" {
   type        = string
 }
 
+variable "instance_count" {
+  description = "Number of Aurora instances"
+  type        = number
+  default     = 2
+}
+
 variable "tags" {
   description = "tags to apply to rds aurora cluster"
   type        = map(string)
