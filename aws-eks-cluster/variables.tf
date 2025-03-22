@@ -39,7 +39,11 @@ variable "controller_image_repo" {
 }
 
 variable "map_users" {
-    type = list(string)
+    type = list(object({
+        userarn  = string
+        username = string
+        groups   = list(string)
+    }))
 }
 
 variable "tags" { 
