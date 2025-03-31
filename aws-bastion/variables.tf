@@ -13,11 +13,6 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "subnet_id" {
-  description = "The subnet ID to deploy the bastion host in (usually a public subnet)"
-  type        = string
-}
-
 variable "allowed_cidr_blocks" {
   description = "List of CIDR blocks allowed to access the bastion host via SSH"
   type        = list(string)
