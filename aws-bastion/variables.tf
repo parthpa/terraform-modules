@@ -51,3 +51,9 @@ variable "public_subnet_ids" {
   description = "List of public subnet IDs in the VPC"
   type        = list(string)
 }
+
+variable "user_data" {
+  description = "Optional cloud-init user_data script to be executed on instance launch"
+  type        = string
+  default     = ""  # Default to empty if not provided
+}

@@ -28,6 +28,7 @@ resource "aws_instance" "bastion" {
   associate_public_ip_address = true
   key_name                    = var.key_name
 
+  user_data                   = var.user_data
   tags = {
     Name = "${var.environment}-${var.name}-bastion-host"
   }
