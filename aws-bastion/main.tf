@@ -29,7 +29,5 @@ resource "aws_instance" "bastion" {
   key_name                    = var.key_name
 
   user_data                   = var.user_data
-  tags = {
-    Name = "${var.environment}-${var.name}-bastion-host"
-  }
+  tags = local.tags
 }
