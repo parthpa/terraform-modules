@@ -45,6 +45,7 @@
 |------|-------------|
 | <a name="output_application_subnets"></a> [application\_subnets](#output\_application\_subnets) | n/a |
 | <a name="output_database_subnets"></a> [database\_subnets](#output\_database\_subnets) | n/a |
+| <a name="output_default_security_group_id"></a> [default\_security\_group\_id](#output\_default\_security\_group\_id) | ID of the default security group |
 | <a name="output_nat_gateway_ids"></a> [nat\_gateway\_ids](#output\_nat\_gateway\_ids) | List of NAT Gateway IDs |
 | <a name="output_private_route_table_id"></a> [private\_route\_table\_id](#output\_private\_route\_table\_id) | ID of the private route table |
 | <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | List of IDs of the private subnets |
