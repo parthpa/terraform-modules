@@ -25,6 +25,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Apply changes immediately or during the next maintenance window | `bool` | `true` | no |
 | <a name="input_cluster_id"></a> [cluster\_id](#input\_cluster\_id) | Prefix for the cluster identifier | `string` | n/a | yes |
 | <a name="input_db_instance_class"></a> [db\_instance\_class](#input\_db\_instance\_class) | Instance class for Aurora instances | `string` | n/a | yes |
 | <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Initial database name | `string` | n/a | yes |
