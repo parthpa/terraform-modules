@@ -35,3 +35,8 @@ output "application_subnets" {
 output "database_subnets" {
   value = slice(module.vpc.private_subnets, length(module.vpc.private_subnets) / 2, length(module.vpc.private_subnets))
 }
+
+output "default_security_group_id" {
+  value = module.vpc.default_security_group_id
+  description = "ID of the default security group"
+}
