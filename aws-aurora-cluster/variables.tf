@@ -60,3 +60,9 @@ variable "snapshot_identifier" {
   type        = string
   default     = ""
 }
+
+variable "apply_immediately" {
+  description = "Apply changes immediately or during the next maintenance window"
+  type        = bool
+  default     = true
+}

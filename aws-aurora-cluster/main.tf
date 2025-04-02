@@ -14,6 +14,7 @@ resource "aws_rds_cluster" "this" {
   db_subnet_group_name    = aws_db_subnet_group.this.name
   skip_final_snapshot     = true
 
+  apply_immediately       = var.apply_immediately
   snapshot_identifier     = var.snapshot_identifier
   tags                    = var.tags
 }
