@@ -33,6 +33,7 @@ No modules.
 | <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | Redis engine version | `string` | `"7.1"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name (e.g., dev, prod) | `string` | n/a | yes |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | Redis node type | `string` | `"cache.t2.small"` | no |
+| <a name="input_num_cache_clusters"></a> [num\_cache\_clusters](#input\_num\_cache\_clusters) | Number of cache clusters (primary and replicas) this replication group will have | `number` | `1` | no |
 | <a name="input_parameter_group_name"></a> [parameter\_group\_name](#input\_parameter\_group\_name) | Parameter group to use | `string` | `"default.redis7"` | no |
 | <a name="input_port"></a> [port](#input\_port) | Redis port | `number` | `6379` | no |
 | <a name="input_replication_group"></a> [replication\_group](#input\_replication\_group) | Name for the new Redis replication group | `string` | n/a | yes |
