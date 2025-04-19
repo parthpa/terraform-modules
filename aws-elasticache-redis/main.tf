@@ -21,6 +21,7 @@ resource "aws_security_group_rule" "redis_ingress_from_sg" {
 resource "aws_elasticache_replication_group" "redis_oss" {
   replication_group_id          = "${var.environment}-redis-${var.replication_group}"
   description                   = "Redis OOS Cache"
+  num_cache_clusters            = var.num_cache_clusters
   node_type                     = var.node_type
   automatic_failover_enabled    = true
   engine                        = "redis"

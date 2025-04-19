@@ -41,6 +41,10 @@ variable "parameter_group_name" {
   default     = "default.redis7"
 }
 
+variable "num_cache_clusters" {
+  description = "Number of cache clusters (primary and replicas) this replication group will have"
+  default = 1
+}
 variable "port" {
   description = "Redis port"
   type        = number
