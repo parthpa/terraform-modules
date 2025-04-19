@@ -11,7 +11,7 @@ resource "aws_security_group" "redis_security_group" {
 
 resource "aws_security_group_rule" "redis_ingress_from_sg" {
   type                     = "ingress"
-  from_port                = 0
+  from_port                = var.port
   to_port                  = var.port
   protocol                 = "tcp"
   security_group_id        = aws_security_group.redis_security_group.id
