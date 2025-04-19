@@ -24,6 +24,7 @@ resource "aws_elasticache_replication_group" "redis_oss" {
   num_cache_clusters            = var.num_cache_clusters
   node_type                     = var.node_type
   automatic_failover_enabled    = true
+  multi_az_enabled              = true
   engine                        = "redis"
   engine_version                = var.engine_version
   parameter_group_name          = var.parameter_group_name
