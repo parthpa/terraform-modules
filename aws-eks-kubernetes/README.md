@@ -45,6 +45,8 @@ No modules.
 | <a name="input_image_tag"></a> [image\_tag](#input\_image\_tag) | Tag for the container image | `any` | n/a | yes |
 | <a name="input_memory_request"></a> [memory\_request](#input\_memory\_request) | Requested Memory | `any` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Kubernetes namespace | `any` | n/a | yes |
+| <a name="input_tg_healthcheck_interval"></a> [tg\_healthcheck\_interval](#input\_tg\_healthcheck\_interval) | Specifies the interval(in seconds) between health check of an individual target | `number` | `60` | no |
+| <a name="input_tg_healthcheck_timeout"></a> [tg\_healthcheck\_timeout](#input\_tg\_healthcheck\_timeout) | Specifies the timeout(in seconds) during which no response from a target means a failed health check | `number` | `40` | no |
 | <a name="input_tls_cert_domain_name"></a> [tls\_cert\_domain\_name](#input\_tls\_cert\_domain\_name) | Domain Name of TLS Cert to use for Frontend ELB | `any` | n/a | yes |
 
 ## Outputs
