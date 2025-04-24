@@ -66,3 +66,13 @@ variable "enable_cloudwatch_logs" {
     description = "Set this variable to enable cloudwatch logs. Disabled by default"
     default = false
 }
+
+variable "tg_healthcheck_interval" {
+    description = "Specifies the interval(in seconds) between health check of an individual target"
+    default = 60
+}
+
+variable "tg_healthcheck_timeout" {
+    description = "Specifies the timeout(in seconds) during which no response from a target means a failed health check"
+    default = 40
+}

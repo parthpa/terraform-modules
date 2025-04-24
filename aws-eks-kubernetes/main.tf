@@ -93,6 +93,8 @@ resource "kubernetes_ingress_v1" "ingress" {
       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "instance"
       "alb.ingress.kubernetes.io/healthcheck-path" = "/health"
+      "alb.ingress.kubernetes.io/healthcheck-interval-seconds" = "${var.tg_healthcheck_interval}"
+      "alb.ingress.kubernetes.io/healthcheck-timeout-seconds" = "${var.tg_healthcheck_timeout}"
       "alb.ingress.kubernetes.io/load-balancer-name" = "${var.environment}-${var.namespace}-eks-alb"
       "alb.ingress.kubernetes.io/backend-protocol" = "HTTP"
       "alb.ingress.kubernetes.io/listen-ports" = "[{\"HTTP\":80},{\"HTTPS\":443}]"
