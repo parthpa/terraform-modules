@@ -34,7 +34,7 @@ resource "aws_appautoscaling_target" "this" {
 
   max_capacity       = var.autoscaling_max_capacity
   min_capacity       = var.autoscaling_min_capacity
-  resource_id        = "cluster:${aws_rds_cluster.this[0].cluster_identifier}"
+  resource_id        = "cluster:${aws_rds_cluster.this.id}"
   scalable_dimension = "rds:cluster:ReadReplicaCount"
   service_namespace  = "rds"
 
@@ -52,7 +52,7 @@ resource "aws_appautoscaling_policy" "this" {
 
   name               = var.autoscaling_policy_name
   policy_type        = "TargetTrackingScaling"
-  resource_id        = "cluster:${aws_rds_cluster.this[0].cluster_identifier}"
+  resource_id        = "cluster:${aws_rds_cluster.this.id}"
   scalable_dimension = "rds:cluster:ReadReplicaCount"
   service_namespace  = "rds"
 
