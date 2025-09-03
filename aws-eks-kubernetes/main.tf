@@ -69,8 +69,8 @@ resource "kubernetes_deployment" "deployment" {
               }
               resources {
                 requests = {
-                  cpu    = var.cpu_request
-                  memory = var.memory_request
+                  cpu    = var.web_cpu_request
+                  memory = var.web_memory_request
                 }
               }
             }
@@ -156,12 +156,12 @@ resource "kubernetes_deployment" "cron" {
               }
               resources {
                 requests = {
-                  cpu    = "150m"
-                  memory = "1024Mi"
+                  cpu    = var.cron_cpu_request
+                  memory = var.cron_memory_request
                 }
                 limits = {
-                  cpu    = "300m"
-                  memory = "2048Mi"
+                  cpu    = var.cron_cpu_limit
+                  memory = var.cron_memory_limit
                 }
               }
             }
