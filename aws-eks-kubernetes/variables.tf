@@ -42,12 +42,28 @@ variable "environment" {
     description = "Deployment environment"
 }
 
-variable "cpu_request" {
-    description = "Requested CPU"
+variable "web_cpu_request" {
+    description = "Requested CPU for Web Pod"
 }
 
-variable "memory_request" {
-    description = "Requested Memory"
+variable "web_memory_request" {
+    description = "Requested Memory for Web Pod"
+}
+
+variable "cron_cpu_request" {
+    description = "Requested CPU for Cron Pod"
+}
+
+variable "cron_memory_request" {
+    description = "Requested Memory for Cron Pod"
+}
+
+variable "cron_cpu_limit" {
+    description = "Limit CPU for Cron Pod"
+}
+
+variable "cron_memory_limit" {
+    description = "Limit Memory for Cron Pod"
 }
 
 variable "tls_cert_domain_name" {
