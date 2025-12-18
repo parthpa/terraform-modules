@@ -16,6 +16,7 @@ module "eks" {
 
   self_managed_node_groups = {
     "${var.environment}-${var.cluster_name}-worker-group" = {
+      ami_type      = "BOTTLEROCKET_x86_64"
       instance_type = var.instance_type
 
       min_size     = var.worker_count
