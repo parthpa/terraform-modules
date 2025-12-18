@@ -7,4 +7,5 @@ locals {
       kubernetes_groups = u.groups
     }
   }
+  worker_group_key = "${var.environment}-${var.cluster_name}-worker-group"
 }
