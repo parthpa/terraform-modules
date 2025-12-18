@@ -15,7 +15,7 @@ module "eks" {
   access_entries = local.access_entries_from_users
 
   self_managed_node_groups = {
-    "${var.environment}-${var.cluster_name}-worker-group" = {
+    "${var.environment}-${var.cluster_name}" = {
       ami_type      = "BOTTLEROCKET_x86_64"
       instance_type = var.instance_type
 
