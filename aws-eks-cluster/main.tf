@@ -1,39 +1,48 @@
 module "eks" {
-    source = "terraform-aws-modules/eks/aws"
-    version = "17.24.0"
-    cluster_name = "${var.environment}-${var.cluster_name}"
-    cluster_version = var.cluster_version
-    subnets = var.private_subnets
-    vpc_id = var.vpc_id
-    enable_irsa = true
-    workers_group_defaults = {
-        root_volume_type = "gp2"
-    }
-    worker_groups = [
-        {
-            name                          = "${var.environment}-${var.cluster_name}-worker-group"
-            instance_type                 = var.instance_type
-            additional_userdata           = "echo nothing"
-            additional_security_group_ids = [var.additional_security_group_ids]
-            asg_desired_capacity          = var.worker_count
-        },
-    ]
-    workers_additional_policies = [
-      aws_iam_policy.fluentbit_cloudwatch_access.arn,
-      "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-    ]
-    map_roles = [
-        {
-            rolearn  = module.eks.worker_iam_role_arn
-            username = "system:node:{{EC2PrivateDNSName}}"
-            groups = [
-                "system:bootstrappers",
-                "system:nodes",
-            ]
+  source  = "terraform-aws-modules/eks/aws"
+  version = "21.10.1"
+
+  name               = "${var.environment}-${var.cluster_name}"
+  kubernetes_version = var.cluster_version
+
+  vpc_id     = var.vpc_id
+  subnet_ids = var.private_subnets
+
+  enable_irsa = true
+
+  authentication_mode = "API_AND_CONFIG_MAP"
+
+  access_entries = local.access_entries_from_users
+
+  self_managed_node_groups = {
+    "${var.environment}-${var.cluster_name}-worker-group" = {
+      instance_type = var.instance_type
+
+      min_size     = var.worker_count
+      max_size     = var.worker_count
+      desired_size = var.worker_count
+
+      vpc_security_group_ids = var.additional_security_group_ids
+
+      post_bootstrap_user_data = "echo nothing"
+
+      iam_role_additional_policies = {
+        fluentbit_cloudwatch_access = aws_iam_policy.fluentbit_cloudwatch_access.arn
+        cloudwatch_agent            = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+      }
+
+      block_device_mappings = {
+        xvda = {
+          device_name = "/dev/xvda"
+          ebs = {
+            volume_type = "gp2"
+          }
         }
-    ]
-    map_users = var.map_users
-    tags      = var.tags
+      }
+    }
+  }
+
+  tags = var.tags
 }
 
 module "lb_role" {
@@ -108,11 +117,11 @@ resource "kubernetes_service_account" "service-account" {
 }
 
 data "aws_eks_cluster" "cluster" {
-    name = module.eks.cluster_id
+    name = module.eks.cluster_name
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-    name = module.eks.cluster_id
+    name = module.eks.cluster_name
 }
 
 resource "aws_iam_policy" "fluentbit_cloudwatch_access" {
