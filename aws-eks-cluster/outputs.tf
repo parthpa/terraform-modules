@@ -38,11 +38,6 @@ output "kubectl_config" {
   value       = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.region}"
 }
 
-output "config_map_aws_auth" {
-  description = "Formatted YAML for the aws-auth ConfigMap (legacy)."
-  value       = module.eks.aws_auth_configmap_yaml
-}
-
 output "aws_eks_cluster_endpoint" {
   value = data.aws_eks_cluster.cluster.endpoint
 }
