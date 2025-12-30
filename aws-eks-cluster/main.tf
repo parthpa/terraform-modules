@@ -20,15 +20,15 @@ module "eks" {
 
     vpc_security_group_ids = var.additional_security_group_ids
 
-    iam_role_additional_policies = [
-      aws_iam_policy.fluentbit_cloudwatch_access.arn,
-      "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
-    ]
+    iam_role_additional_policies = {
+      fluentbit = aws_iam_policy.fluentbit_cloudwatch_access.arn
+      cwagent   = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+    }
   }
 
   eks_managed_node_groups = {
     main = {
-      name         = "${var.environment}-${var.cluster_name}-al2023"
+      name         = "${var.environment}-${substr(var.cluster_name, 0, 10)}-ng"
       desired_size = var.worker_count
       min_size     = var.worker_count
       max_size     = var.worker_count
