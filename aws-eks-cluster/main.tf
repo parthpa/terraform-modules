@@ -1,45 +1,37 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "21.10.1"
+  version = "~> 19.0"
 
-  name               = "${var.environment}-${var.cluster_name}"
-  kubernetes_version = var.cluster_version
+  cluster_name    = "${var.environment}-${var.cluster_name}"
+  cluster_version = var.cluster_version
 
   vpc_id     = var.vpc_id
   subnet_ids = var.private_subnets
 
   enable_irsa = true
 
-  authentication_mode = "API_AND_CONFIG_MAP"
+  manage_aws_auth_configmap = true
+  aws_auth_users            = var.map_users
 
-  access_entries = local.access_entries_from_users
+  eks_managed_node_group_defaults = {
+    instance_types = [var.instance_type]
 
-  self_managed_node_groups = {
-    "${var.environment}-${var.cluster_name}" = {
-      ami_type      = "BOTTLEROCKET_x86_64"
-      instance_type = var.instance_type
+    ami_type = "AL2023_x86_64_STANDARD"
 
+    vpc_security_group_ids = var.additional_security_group_ids
+
+    iam_role_additional_policies = [
+      aws_iam_policy.fluentbit_cloudwatch_access.arn,
+      "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy",
+    ]
+  }
+
+  eks_managed_node_groups = {
+    main = {
+      name         = "${var.environment}-${var.cluster_name}-al2023"
+      desired_size = var.worker_count
       min_size     = var.worker_count
       max_size     = var.worker_count
-      desired_size = var.worker_count
-
-      vpc_security_group_ids = var.additional_security_group_ids
-
-      post_bootstrap_user_data = "echo nothing"
-
-      iam_role_additional_policies = {
-        fluentbit_cloudwatch_access = aws_iam_policy.fluentbit_cloudwatch_access.arn
-        cloudwatch_agent            = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-      }
-
-      block_device_mappings = {
-        xvda = {
-          device_name = "/dev/xvda"
-          ebs = {
-            volume_type = "gp2"
-          }
-        }
-      }
     }
   }
 
