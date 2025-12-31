@@ -111,10 +111,12 @@ resource "kubernetes_service_account" "service-account" {
 
 data "aws_eks_cluster" "cluster" {
     name = module.eks.cluster_name
+    depends_on = [module.eks]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
     name = module.eks.cluster_name
+    depends_on = [module.eks]
 }
 
 resource "aws_iam_policy" "fluentbit_cloudwatch_access" {
