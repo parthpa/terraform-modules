@@ -7,21 +7,19 @@ module "eks" {
     vpc_id = var.vpc_id
     enable_irsa = true
     self_managed_node_group_defaults = {
-        root_volume_type = "gp2"
+        vpc_security_group_ids = [var.additional_security_group_ids]
+        iam_role_additional_policies = [
+          aws_iam_policy.fluentbit_cloudwatch_access.arn,
+          "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+        ]
     }
-    self_managed_node_groups = [
-        {
-            name                          = "${var.environment}-${var.cluster_name}-worker-group"
-            instance_type                 = var.instance_type
-            additional_userdata           = "echo nothing"
-            additional_security_group_ids = [var.additional_security_group_ids]
-            asg_desired_capacity          = var.worker_count
-        },
-    ]
-    iam_role_additional_policies  = [
-      aws_iam_policy.fluentbit_cloudwatch_access.arn,
-      "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-    ]
+    self_managed_node_groups = {
+      worker_group = {
+        name                     = "${var.environment}-${var.cluster_name}-worker-group"
+        instance_type            = var.instance_type
+        desired_size             = var.worker_count
+      }
+    }
     # map_roles = [
     #     {
     #         rolearn  = module.eks.worker_iam_role_arn
