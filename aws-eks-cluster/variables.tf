@@ -19,7 +19,7 @@ variable "environment" {
 }
 
 variable "additional_security_group_ids" {
-    type = string
+    type = list(string)
 }
 
 variable "instance_type" {

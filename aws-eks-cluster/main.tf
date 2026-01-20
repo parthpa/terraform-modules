@@ -7,7 +7,7 @@ module "eks" {
     vpc_id = var.vpc_id
     enable_irsa = true
     self_managed_node_group_defaults = {
-        vpc_security_group_ids = [var.additional_security_group_ids]
+        vpc_security_group_ids       = var.additional_security_group_ids
         iam_role_additional_policies = [
           aws_iam_policy.fluentbit_cloudwatch_access.arn,
           "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
