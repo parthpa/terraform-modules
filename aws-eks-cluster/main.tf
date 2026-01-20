@@ -1,15 +1,15 @@
 module "eks" {
     source = "terraform-aws-modules/eks/aws"
-    version = "17.24.0"
+    version = "18.31.2"
     cluster_name = "${var.environment}-${var.cluster_name}"
     cluster_version = var.cluster_version
-    subnets = var.private_subnets
+    subnet_ids = var.private_subnets
     vpc_id = var.vpc_id
     enable_irsa = true
-    workers_group_defaults = {
+    self_managed_node_group_defaults = {
         root_volume_type = "gp2"
     }
-    worker_groups = [
+    self_managed_node_groups = [
         {
             name                          = "${var.environment}-${var.cluster_name}-worker-group"
             instance_type                 = var.instance_type
@@ -18,22 +18,27 @@ module "eks" {
             asg_desired_capacity          = var.worker_count
         },
     ]
-    workers_additional_policies = [
+    iam_role_additional_policies  = [
       aws_iam_policy.fluentbit_cloudwatch_access.arn,
       "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
     ]
-    map_roles = [
-        {
-            rolearn  = module.eks.worker_iam_role_arn
-            username = "system:node:{{EC2PrivateDNSName}}"
-            groups = [
-                "system:bootstrappers",
-                "system:nodes",
-            ]
-        }
-    ]
-    map_users = var.map_users
+    # map_roles = [
+    #     {
+    #         rolearn  = module.eks.worker_iam_role_arn
+    #         username = "system:node:{{EC2PrivateDNSName}}"
+    #         groups = [
+    #             "system:bootstrappers",
+    #             "system:nodes",
+    #         ]
+    #     }
+    # ]
+    # map_users = var.map_users
     tags      = var.tags
+
+    prefix_separator                   = ""
+    iam_role_name                      = "${var.environment}-${var.cluster_name}"
+    cluster_security_group_name        = "${var.environment}-${var.cluster_name}"
+    cluster_security_group_description = "EKS cluster security group."
 }
 
 module "lb_role" {
